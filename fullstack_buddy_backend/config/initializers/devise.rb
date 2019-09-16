@@ -251,7 +251,7 @@ Devise.setup do |config|
   # should add them to the navigational formats lists.
   #
   # The "*/*" below is required to match Internet Explorer requests.
-  config.navigational_formats = []
+  # config.navigational_formats = []
 
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
@@ -298,13 +298,16 @@ Devise.setup do |config|
   # config.sign_in_after_change_password = true
 
   config.jwt do |jwt|
-    jwt.secret = '210c6c4cd8ceb8fb949250f7bf6f800c5af6c6af3cbbed3ab840840786e77a973fe0d942da0a1cd72eba120d5b78aabefc3082b71bc1ce41c5ce109f57f89d5e'
-    jwt.dispatch_requests = [
-        ['POST', %r{^/login$}]
-      ]
-      jwt.revocation_requests = [
-        ['DELETE', %r{^/logout$}]
-      ]
+    jwt.secret = ENV['DEVISE_SECRET_KEY']
+    warn('warning: jwt.secret can not be nil') if jwt.secret.nil?
+    jwt.dispatch_requests = [['POST', %r{^users/sign_in$}]]
+
+    #  You need to tell which requests will revoke incoming JWT tokens, and you can add the the request path to revocation_requests
+    jwt.revocation_requests = [['DELETE', %r{^users/sign_out$}]]
     jwt.expiration_time = 1.day.to_i
+
   end
+  config.remember_for = 1.day.to_i
+  config.timeout_in = 1.day.to_i
+  config.navigational_formats = []
 end
