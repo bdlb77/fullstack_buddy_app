@@ -1,5 +1,54 @@
 require 'rails_helper'
 
 RSpec.describe Project, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context 'DB Columns' do
+    {
+      title: :string,
+      description: :string,
+      personal_completed: :boolean,
+      personal_github_repo_url: :string,
+      personal_sharable: :boolean,
+      type: :string,
+      template_id: :integer
+    }.each do |attr, type|
+      it "should have column of #{attr}" do
+        is_expected.to have_db_column(attr).of_type type
+      end
+    end
+  end
+  context 'Personal Project' do 
+    before do
+      @project = FactoryBot.create(:personal_project)
+    end
+    
+    describe 'validations' do
+      it "should be a type of Personal Project." do 
+        expect(@project.class).to eq(PersonalProject)
+      end
+
+      %i[title description personal_completed personal_sharable type].each do |column|
+        it "should have presence of #{column}" do
+          is_expected.to validate_presence_of column
+        end
+      end
+    end
+
+    describe 'Has Many Associations' do 
+      %i[project_technologies technologies project_users users steps features].each do |assoc|
+        it "should have association of has_many for #{assoc}" do 
+          is_expected.to have_many assoc
+        end
+      end
+    end
+
+    describe 'Belongs To Associations' do
+      it "should have assocation of belongs_to for Template" do
+        is_expected.to belong_to :template
+      end
+    end
+  end
+
+  context 'Template' do 
+
+  end
 end
