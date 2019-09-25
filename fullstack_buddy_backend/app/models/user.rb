@@ -6,9 +6,9 @@ class User < ApplicationRecord
          :jwt_authenticatable, jwt_revocation_strategy: JwtBlacklist
 
 
-  has_many :project_users, dependent: :destroy
-  has_many :projects, through: :project_users, dependent: :destroy
+  has_many :user_projects, dependent: :destroy
+  has_many :projects, through: :user_projects, dependent: :destroy
 
-  has_many :resource_users, dependent: :destroy
-  has_many :resources, through: :resource_users
+  has_many :user_resources, dependent: :destroy
+  has_many :resources, through: :user_resources
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_20_141223) do
+ActiveRecord::Schema.define(version: 2019_09_20_132505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,15 +49,6 @@ ActiveRecord::Schema.define(version: 2019_09_20_141223) do
     t.index ["technology_id"], name: "index_project_technologies_on_technology_id"
   end
 
-  create_table "project_users", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "project_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["project_id"], name: "index_project_users_on_project_id"
-    t.index ["user_id"], name: "index_project_users_on_user_id"
-  end
-
   create_table "projects", force: :cascade do |t|
     t.string "title"
     t.string "description"
@@ -69,15 +60,6 @@ ActiveRecord::Schema.define(version: 2019_09_20_141223) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["template_id"], name: "index_projects_on_template_id"
-  end
-
-  create_table "resource_users", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "resource_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["resource_id"], name: "index_resource_users_on_resource_id"
-    t.index ["user_id"], name: "index_resource_users_on_user_id"
   end
 
   create_table "resources", force: :cascade do |t|
@@ -126,6 +108,24 @@ ActiveRecord::Schema.define(version: 2019_09_20_141223) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "user_projects", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "project_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_user_projects_on_project_id"
+    t.index ["user_id"], name: "index_user_projects_on_user_id"
+  end
+
+  create_table "user_resources", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "resource_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["resource_id"], name: "index_user_resources_on_resource_id"
+    t.index ["user_id"], name: "index_user_resources_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -147,14 +147,14 @@ ActiveRecord::Schema.define(version: 2019_09_20_141223) do
   add_foreign_key "feature_technologies", "technologies"
   add_foreign_key "project_technologies", "projects"
   add_foreign_key "project_technologies", "technologies"
-  add_foreign_key "project_users", "projects"
-  add_foreign_key "project_users", "users"
   add_foreign_key "projects", "projects", column: "template_id"
-  add_foreign_key "resource_users", "resources"
-  add_foreign_key "resource_users", "users"
   add_foreign_key "solutions", "projects", column: "template_id"
   add_foreign_key "steps", "features"
   add_foreign_key "steps", "projects"
   add_foreign_key "tags", "resources"
   add_foreign_key "tags", "technologies"
+  add_foreign_key "user_projects", "projects"
+  add_foreign_key "user_projects", "users"
+  add_foreign_key "user_resources", "resources"
+  add_foreign_key "user_resources", "users"
 end
