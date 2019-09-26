@@ -17,8 +17,10 @@ RSpec.describe Project, type: :model do
     end
   end
   context 'Personal Project' do 
-    before do
-      @project = FactoryBot.create(:personal_project)
+    before(:each) do
+      @template = FactoryBot.create(:template, template_id: nil)
+      @project = FactoryBot.create(:personal_project, template: @template)
+      @user = FactoryBot.create(:user)
     end
     
     describe 'validations' do
@@ -34,16 +36,27 @@ RSpec.describe Project, type: :model do
     end
 
     describe 'Has Many Associations' do 
-      %i[project_technologies technologies project_users users steps features].each do |assoc|
-        it "should have association of has_many for #{assoc}" do 
-          is_expected.to have_many assoc
+      %i[project_technologies technologies user_projects users steps features].each do |assoc|
+        it "should have association of has_many for #{assoc}" do
+          expect(@project).to have_many assoc
         end
       end
+      it 'should destroy all the project_technologies and user_projects if personal project is deleted' do
+        @project2 = PersonalProject.create(title: 'personal project', template: @template)
+        @technology = Technology.create(name: 'Ruby')
+        binding.pry
+        @project_technology = @project2.project_technologies.create(project: @project2, technology: @technology)
+        @user_project = @project2.user_projects.create(project: @project2, user: @user)
+        @project2.destroy
+        expect(ProjectTechnology.all).to eq([])
+        expect(UserProject.all).to eq([])
+      end
+
     end
 
     describe 'Belongs To Associations' do
-      it "should have assocation of belongs_to for Template" do
-        is_expected.to belong_to :template
+      it 'should have assocation of belongs_to for Template' do
+        expect(@project).to belong_to :template
       end
     end
   end

@@ -9,14 +9,12 @@ FactoryBot.define do
   end
 
   factory(:personal_project) do
-    tesla_authenticated { false }
     type { 'Project' }
     title { 'A personal project' }
     description { ' a personal project from the airbnb template' }
-    template { FactoryBot.create(:template)}
     personal_completed { false }
     personal_sharable { true }
-    personal_github_repo { 'https://www.githubexamplerepo.com'}
+    personal_github_repo_url { 'https://www.githubexamplerepo.com'}
     
   end
 end
