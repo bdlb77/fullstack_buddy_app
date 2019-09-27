@@ -36,6 +36,7 @@ RSpec.describe Project, type: :model do
     end
 
     describe 'Has Many Associations' do 
+      
       %i[project_technologies technologies user_projects users steps features].each do |assoc|
         it "should have association of has_many for #{assoc}" do
           expect(@project).to have_many assoc
@@ -44,9 +45,8 @@ RSpec.describe Project, type: :model do
       it 'should destroy all the project_technologies and user_projects if personal project is deleted' do
         @project2 = PersonalProject.create(title: 'personal project', template: @template)
         @technology = Technology.create(name: 'Ruby')
-        binding.pry
-        @project_technology = @project2.project_technologies.create(project: @project2, technology: @technology)
-        @user_project = @project2.user_projects.create(project: @project2, user: @user)
+        @project_technology = ProjectTechnology.create(project: @project2, technology: @technology)
+        UserProject.create(project: @project2, user: @user)
         @project2.destroy
         expect(ProjectTechnology.all).to eq([])
         expect(UserProject.all).to eq([])
