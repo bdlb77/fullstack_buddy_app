@@ -11,4 +11,7 @@ class User < ApplicationRecord
 
   has_many :user_resources, dependent: :destroy
   has_many :resources, through: :user_resources
+
+  validates :github_handle, presence: true
+  validates :github_handle, uniqueness: true
 end

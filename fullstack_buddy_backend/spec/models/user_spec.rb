@@ -28,11 +28,14 @@ RSpec.describe User, type: :model do
     xit 'should validate password' do 
       expect(subject.valid_password?('123451')).to be_truthy
     end
-    it {should validate_presence_of(:github_handle)}
+    describe 'github_handle' do
+      it {should validate_presence_of(:github_handle)}
+      it {should validate_uniqueness_of(:github_handle)}
+    end
   end
 
   describe 'Associations' do
-    %i[project_users projects resource_users resources].each do |association|
+    %i[user_projects projects user_resources resources].each do |association|
       it "should have many #{association}" do
         is_expected.to have_many association
       end
