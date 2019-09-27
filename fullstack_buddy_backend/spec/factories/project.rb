@@ -9,10 +9,11 @@ FactoryBot.define do
   end
 
   factory(:personal_project) do
+   
     type { 'Project' }
     title { 'A personal project' }
     description { ' a personal project from the airbnb template' }
-    personal_completed { false }
+    personal_completed { true }
     personal_sharable { true }
     personal_github_repo_url { 'https://www.githubexamplerepo.com'}
     

@@ -17,7 +17,7 @@ RSpec.describe Project, type: :model do
     end
   end
   context 'Personal Project' do 
-    before(:each) do
+    before  do
       @template = FactoryBot.create(:template, template_id: nil)
       @project = FactoryBot.create(:personal_project, template: @template)
       @user = FactoryBot.create(:user)
@@ -28,9 +28,15 @@ RSpec.describe Project, type: :model do
         expect(@project.class).to eq(PersonalProject)
       end
 
-      %i[title description personal_completed personal_sharable type].each do |column|
+      %i[title description].each do |column|
         it "should have presence of #{column}" do
           is_expected.to validate_presence_of column
+        end
+      end
+
+      %i[personal_completed personal_sharable].each do |column|
+        it "should either be true/false for #{column}" do
+          is_expected.to validate_inclusion_of(column).in_array([true, false])
         end
       end
     end
@@ -43,7 +49,7 @@ RSpec.describe Project, type: :model do
         end
       end
       it 'should destroy all the project_technologies and user_projects if personal project is deleted' do
-        @project2 = PersonalProject.create(title: 'personal project', template: @template)
+        @project2 = FactoryBot.create(:personal_project, template: @template)
         @technology = Technology.create(name: 'Ruby')
         @project_technology = ProjectTechnology.create(project: @project2, technology: @technology)
         UserProject.create(project: @project2, user: @user)
@@ -62,6 +68,23 @@ RSpec.describe Project, type: :model do
   end
 
   context 'Template' do 
+    before do 
+      @template = FactoryBot.create(:template, template_id: nil)
+      @project = FactoryBot.create(:personal_project, template: @template)
+      @project2 = FactoryBot.create(:personal_project, template: @template)
+      @user = FactoryBot.create(:user)
+    end
 
+    describe 'validations' do
+      it 'should have unique title' do
+        should validate_uniqueness_of(:title)
+      end
+    end
+
+    describe 'has_many associations' do
+      it 'should have many projects' do
+        expect(@template).to have_many(:projects)
+      end
+    end
   end
 end
