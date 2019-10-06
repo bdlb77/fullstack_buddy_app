@@ -42,7 +42,6 @@ const LandingMainStyles = styled.main`
 			margin-bottom: 10rem;
 		}
 		.text {
-			width: 40%;
 			text-align: center;
 		}
 	}
@@ -60,6 +59,9 @@ const LandingMainStyles = styled.main`
 		display: none;
 	}
 	@media screen and (min-width: 1045px) {
+		.text {
+			width: 40%;
+		}
 		.arrow_container {
 			display: block;
 			position: absolute;
