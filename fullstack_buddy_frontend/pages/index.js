@@ -1,9 +1,18 @@
 import React from 'react';
 import Head from 'next/head';
-import Nav from '../components/nav';
 import styled from 'styled-components';
+import Slogan from '../components/Slogan';
+import LandingMain from '../components/LandingMain';
 
-const HomeStyles = styled.div``;
+const HomeStyles = styled.div`
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+
+	.footer_area {
+		height: 40vh;
+	}
+`;
 
 const Home = () => (
 	<HomeStyles>
@@ -11,8 +20,9 @@ const Home = () => (
 			<title>Home</title>
 			<link rel="icon" href="/static/favicon.ico" importance="low" />
 		</Head>
-
-		<h1>Welcome To Full Stack Buddy. Your FB.</h1>
+		<Slogan />
+		<LandingMain />
+		<div className="footer_area"></div>
 	</HomeStyles>
 );
 

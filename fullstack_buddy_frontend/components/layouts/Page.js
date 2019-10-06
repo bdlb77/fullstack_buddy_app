@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import Meta from '../meta/Meta';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
+import Nav from '../nav';
 // import DeliusUnicaseRegular from '../../static/DeliusUnicase-Regular.ttf';
 const theme = {
-	gunmetal: '#292F36',
-	burgundy: '#732427',
-	grey: '#747572',
-	snow: '#E0E0E0',
+	primaryBg: '#495056',
+	secondaryBg: '#C8DAD3',
+	primary: '#3F3D56',
+	secondary: '#93B5B3',
+	mediumText: '#63707E',
+	grey: '#F8F9FA',
+	white: '#fff',
+	accent: '#FFE0C5',
 	maxWidth: '1000px',
 	bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
 	lgBreak: '1300px',
@@ -44,19 +49,34 @@ const GlobalStyles = createGlobalStyle`
     font-size: 2rem;
     line-height: 2;
     font-family: 'delius_unicase_bold';
+    background-color: ${theme.grey};
+    color: ${theme.primary}
+    min-height: 100vh;
+    max-width: 100vw;
+    & > div {
+      min-height: 100vh;
+    } 
   }
   a{
     text-decoration: none;
-    color: ${theme.burgundy};
+    color: ${theme.mediumText};
   }
+  ul {
+    list-style: none;
+  }
+`;
+
+const Inner = styled.div`
+	/* height: calc(100vh - 70px); */
 `;
 class Page extends Component {
 	render() {
 		return (
 			<ThemeProvider theme={theme}>
 				<GlobalStyles />
-				<Meta></Meta>
-				<div>{this.props.children}</div>
+				<Meta />
+				<Nav />
+				<Inner>{this.props.children}</Inner>
 			</ThemeProvider>
 		);
 	}
