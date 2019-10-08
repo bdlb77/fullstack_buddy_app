@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const Arrow3 = props => {
 	return (
-		<svg width="394" height="558" viewBox="0 0 394 558" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<svg viewBox="0 0 394 558" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M93.3446 211.971V211.971C116.096 225.184 121.461 255.705 104.578 275.884L103.789 276.827"
 				stroke="#C8DAD3"

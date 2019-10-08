@@ -14,8 +14,6 @@ const LandingMainStyles = styled.main`
 	background-color: ${props => props.theme.white};
 	margin: 0 auto;
 	box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-	margin-top: 10rem;
-	padding-top: 10rem;
 	position: relative;
 
 	h1 {
@@ -36,20 +34,35 @@ const LandingMainStyles = styled.main`
 			min-width: 300px;
 		}
 		&:not(:first-child) {
-			margin-top: 20rem;
+			margin-top: 5rem;
+		}
+		&:last-child {
+			margin-bottom: 5rem;
 		}
 		.world {
 			margin-bottom: 10rem;
 		}
 		.text {
 			text-align: center;
+			margin-top: 5rem;
 		}
 	}
 
 	.project_section,
 	.coding,
 	.world {
-		position: relative;
+		.image {
+			position: relative;
+		}
+	}
+
+	.coding {
+		.image {
+			order: 1;
+		}
+		.text {
+			order: 2;
+		}
 	}
 
 	.arrow_container,
@@ -59,8 +72,28 @@ const LandingMainStyles = styled.main`
 		display: none;
 	}
 	@media screen and (min-width: 1045px) {
+		padding-top: 10rem;
+		margin-top: 10rem;
+		section {
+			&:not(:first-child) {
+				margin-top: 20rem;
+			}
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+
+		.coding {
+			.image {
+				order: 2;
+			}
+			.text {
+				order: 1;
+			}
+		}
 		.text {
 			width: 40%;
+			margin-top: 0;
 		}
 		.arrow_container {
 			display: block;
@@ -74,18 +107,16 @@ const LandingMainStyles = styled.main`
 			display: block;
 			position: absolute;
 			top: 0;
-			right: 50px;
-			svg {
-				height: 90%;
-				width: 80%;
-			}
+			right: -350px;
+			width: 30vw;
 		}
 
 		.arrow_3 {
 			display: block;
 			position: absolute;
-			top: 150px;
-			left: 140px;
+			top: 250px;
+			left: -350px;
+			width: 30vw;
 
 			svg {
 				height: 90%;
@@ -96,12 +127,12 @@ const LandingMainStyles = styled.main`
 		.arrow_4 {
 			display: block;
 			position: absolute;
+			right: -400px;
+			width: 30vw;
 			top: 150px;
-			right: 100px;
-
 			svg {
 				height: 100%;
-				width: 85%;
+				width: 100%;
 			}
 		}
 	}
